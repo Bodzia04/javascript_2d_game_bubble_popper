@@ -25,6 +25,7 @@ canvas.addEventListener('mouseup', function(){
     mouse.click = false;
 });
 
+//Player
 class Player{
     constructor(){
         this.x = canvas.width;
@@ -65,7 +66,15 @@ class Player{
         ctx.fillRect(this.x, this.y, this.radius, 10);
     }
 }
-//Player
+
+const player = new Player();
 //Bubbles
 //Animation loop
+function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player.update();
+    player.draw();
+    requestAnimationFrame(animate);
+}
+animate();
 
