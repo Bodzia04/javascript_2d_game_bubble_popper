@@ -100,6 +100,9 @@ function handleBubbles(){
     for(let i = 0; i < bubblesArrey.length; i++){
         bubblesArrey[i].update();
         bubblesArrey[i].draw();
+        if(bubblesArrey[i].y < 0){
+            bubblesArrey.splice(i,1);
+        }
     }
 }
 //Animation loop
