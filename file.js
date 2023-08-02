@@ -26,6 +26,11 @@ canvas.addEventListener('mouseup', function(){
 });
 
 //Player
+const playerLeft = new Image();
+playerLeft.src = 'images/fish-red-swim-left.png';
+const playerRight = new Image();
+playerRight.src = 'images/fish-red-swim-right.png';
+
 class Player{
     constructor(){
         this.x = canvas.width;
