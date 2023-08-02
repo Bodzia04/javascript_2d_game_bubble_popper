@@ -106,7 +106,7 @@ bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
 function handleBubbles(){
     if(gameFrame % 50 == 0){
         bubblesArrey.push(new Bubbles());
-        console.log(bubblesArrey.length);
+        console.log(bubblesArrey.length); 
     }
     for(let i = 0; i < bubblesArrey.length; i++){
         bubblesArrey[i].update();
