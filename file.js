@@ -162,3 +162,7 @@ function animate(){
 }
 animate();
 
+window.addEventListener('resize', function(){
+    canvasPosition = canvas.getBoundingClientRect();
+})
+
