@@ -129,14 +129,11 @@ function handleBubbles(){
     for(let i = 0; i < bubblesArrey.length; i++){
         bubblesArrey[i].update();
         bubblesArrey[i].draw();
-    }
-    //Duct tape for fixing inexplicable flashes of bubbles
-    for(let i = 0; i < bubblesArrey.length; i++){
+
         if(bubblesArrey[i].y < 0 - bubblesArrey[i].radius * 2){
             bubblesArrey.splice(i,1);
-        }
-        if(bubblesArrey[i]){
-            if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
+            i--;
+        } else if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
                 if(bubblesArrey[i].sound === "sound1"){
                     bubblePop1.play();
                 } else if(bubblesArrey[i].sound === "sound2"){
@@ -148,7 +145,7 @@ function handleBubbles(){
             }
         }
     }
-}
+    
 //Animation loop
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
