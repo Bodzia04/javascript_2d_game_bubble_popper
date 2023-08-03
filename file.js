@@ -47,6 +47,8 @@ class Player{
     update(){
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
+        let theta = Math.atan2(dy, dx);
+        this.angle = theta;
         if(mouse.x != this.x){
             this.x -= dx / 30;
         }
@@ -69,6 +71,17 @@ class Player{
         ctx.fill();
         ctx.closePath();
         ctx.fillRect(this.x, this.y, this.radius, 10);
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        if(this.x >= mouse.x){
+            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth / 4, this.spriteHeight / 4);
+        } else {
+            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth / 4, this.spriteHeight / 4);
+        }
+        ctx.restore();
     }
 }
 
@@ -122,15 +135,17 @@ function handleBubbles(){
         if(bubblesArrey[i].y < 0 - bubblesArrey[i].radius * 2){
             bubblesArrey.splice(i,1);
         }
-        if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
-            if(bubblesArrey[i].sound === "sound1"){
-                bubblePop1.play();
-            } else if(bubblesArrey[i].sound === "sound2"){
-                bubblePop2.play();
+        if(bubblesArrey[i]){
+            if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
+                if(bubblesArrey[i].sound === "sound1"){
+                    bubblePop1.play();
+                } else if(bubblesArrey[i].sound === "sound2"){
+                    bubblePop2.play();
+                }
+                score++;
+                bubblesArrey[i].counted = true;
+                bubblesArrey.splice(i,1)
             }
-            score++;
-            bubblesArrey[i].counted = true;
-            bubblesArrey.splice(i,1)
         }
     }
 }
