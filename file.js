@@ -142,6 +142,7 @@ function handleBubbles(){
                 score++;
                 bubblesArrey[i].counted = true;
                 bubblesArrey.splice(i,1)
+                i--;
             }
         }
     }
