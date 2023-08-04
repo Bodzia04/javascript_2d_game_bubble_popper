@@ -89,6 +89,8 @@ class Player{
 const player = new Player();
 //Bubbles
 const bubblesArrey = [];
+const bubbleImage = new Image();
+bubbleImage.src = "./images/1.png";
 
 class Bubbles{
     constructor(){
@@ -108,12 +110,7 @@ class Bubbles{
     }
 
     draw(){
-        ctx.fillStyle = 'blue';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-        ctx.stroke();
+        ctx.drawImage(bubbleImage, this.x - 65, this.y - 65, this.radius * 2.6, this.radius * 2.6);
     }
 }
 
@@ -190,4 +187,16 @@ animate();
 window.addEventListener('resize', function(){
     canvasPosition = canvas.getBoundingClientRect();
 })
+
+
+//FIXME:
+// чому в режимі спокую голова рибкі опускаїться.
+
+
+// for perspectiv:
+//1. різний розмір бульбашок.
+//2. контроль клавішами.
+//3. вийшовши з води бульбашка лопає.
+
+
 
