@@ -145,10 +145,23 @@ function handleBubbles(){
             }
         }
     }
+
+    for(let i = 0; i < bubblesArrey.length; i++){
+
+    }
+
+    //Repeating backgrounds
+    const background = new Image();
+    background.src = 'images/background1.png';
+
+    function handleBackground(){
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    }
     
 //Animation loop
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    handleBackground();
     handleBubbles();
     player.update();
     player.draw();
