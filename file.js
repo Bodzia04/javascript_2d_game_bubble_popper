@@ -7,6 +7,7 @@ canvas.height = 500;
 let score = 0; //рахунок
 let gameFrame = 0; //гра Рамка
 ctx.font = '50px Georgia';
+let gameSpeed = 1;
 
 //Mouse interactivity
 let canvasPosition = canvas.getBoundingClientRect();
@@ -155,8 +156,21 @@ function handleBubbles(){
     const background = new Image();
     background.src = 'images/background1.png';
 
+    const BG = {
+        x1: 0,
+        x2: canvas.width,
+        y: 0,
+        width: canvas.width,
+        height: canvas.height
+    }
+
     function handleBackground(){
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        BG.x1 -= gameSpeed;
+        if(BG.x1 < -BG.width) BG.x1 = BG.width;
+        BG.x2 -= gameSpeed;
+        if(BG.x2 < -BG.width) BG.x2 = BG.width;
+        ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
+        ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height)
     }
     
 //Animation loop
