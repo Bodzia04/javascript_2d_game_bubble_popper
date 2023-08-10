@@ -66,21 +66,15 @@ class Player{
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
         }
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-        ctx.fillRect(this.x, this.y, this.radius, 10);
 
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
         if(this.x >= mouse.x){
-            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth / 4, this.spriteHeight / 4);
+            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -64, -45, this.spriteWidth / 4, this.spriteHeight / 4);
         } else {
-            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth / 4, this.spriteHeight / 4);
+            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, -64, -45, this.spriteWidth / 4, this.spriteHeight / 4);
         }
         ctx.restore();
     }
@@ -163,13 +157,55 @@ function handleBubbles(){
 
     function handleBackground(){
         BG.x1 -= gameSpeed;
-        if(BG.x1 < -BG.width) BG.x1 = BG.width;
+        if(BG.x1 < -BG.width){
+            BG.x1 = BG.width;
+        } 
+        
         BG.x2 -= gameSpeed;
         if(BG.x2 < -BG.width) BG.x2 = BG.width;
         ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
-        ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height)
+        ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
     }
-    
+
+//Enemies
+const enemyImage = new Image();
+enemyImage.src = './images/enemy-fish-yellow.png';
+
+class Enemy {
+    constructor(){
+        this.x = canvas.width + 200;
+        this.y = Math.random() * (canvas.height - 150) + 90;
+        this.radius = 60;
+        this.speed = Math.random() * 2 + 2;
+        this.frame = 0; //рамка
+        this.frameX = 0
+        this.frameY = 0;
+        this.spriteWidth = 418;
+        this.spriteHeight = 397;
+    }
+    draw(){
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    update(){
+        this.x -= this.speed;
+        if(this.x < 0 - this.radius * 2){
+            debugger
+            this.x = canvas.width + 200;
+            this.y = Math.random() * (canvas.height - 150) + 90;
+            this.speed = Math.random() * 2 + 2;
+        }
+    }
+}
+const enemy1 = new Enemy();
+console.log('constructor enemy', enemy1);
+function handleEnemies(){
+    enemy1.update();
+    enemy1.draw();
+}
+
 //Animation loop
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -177,6 +213,7 @@ function animate(){
     handleBubbles();
     player.update();
     player.draw();
+    handleEnemies();
     ctx.fillStyle = 'black';
     ctx.fillText('score: ' + score, 10, 50);
     gameFrame++;
@@ -190,7 +227,9 @@ window.addEventListener('resize', function(){
 
 
 //FIXME:
-// чому в режимі спокую голова рибкі опускаїться.
+// 1. чому в режимі спокую голова рибкі опускаїться.
+// 2. Бульбашка лопає за надто ранно. Коли торкає живота рибки.
+// 3. знайти баг чому картинка хвилі не докінця з'єднуїться.
 
 
 // for perspectiv:
