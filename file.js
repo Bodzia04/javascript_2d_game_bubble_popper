@@ -6,8 +6,9 @@ canvas.height = 500;
 
 let score = 0; //рахунок
 let gameFrame = 0; //гра Рамка
-ctx.font = '50px Georgia';
+ctx.font = '40px Georgia';
 let gameSpeed = 1;
+let gameOver = false;
 
 //Mouse interactivity
 let canvasPosition = canvas.getBoundingClientRect();
@@ -184,10 +185,6 @@ class Enemy {
         this.spriteHeight = 397;
     }
     draw(){
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
         ctx.drawImage(enemyImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 60, this.y - 70, this.spriteWidth / 3, this.spriteHeight / 3);
     }
     update(){
@@ -210,6 +207,13 @@ class Enemy {
             else if(this.frame < 11) this.frameY = 2;
             else this.frameY = 0;
         }
+        const dx = this.x - player.x;
+        const dy = this.y - player.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if(distance < this.radius + player.radius){
+            handleGameOver();
+        }
+
     }
 }
 const enemy1 = new Enemy();
@@ -217,6 +221,12 @@ console.log('constructor enemy', enemy1);
 function handleEnemies(){
     enemy1.update();
     enemy1.draw();
+}
+
+function handleGameOver(){
+    ctx.fillStyle = 'white';
+    ctx.fillText("GAME OVER, you reached score " + score, 110, 250)
+    gameOver = true;
 }
 
 //Animation loop
@@ -230,7 +240,7 @@ function animate(){
     ctx.fillStyle = 'black';
     ctx.fillText('score: ' + score, 10, 50);
     gameFrame++;
-    requestAnimationFrame(animate);
+    if(!gameOver) requestAnimationFrame(animate);
 }
 animate();
 
