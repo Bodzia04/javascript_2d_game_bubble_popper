@@ -1,4 +1,5 @@
 import Player from './player.js';
+import Background from './background.js';
 
 //Canvas setup
 const canvas = document.querySelector('#canvas1');
@@ -11,6 +12,8 @@ let gameFrame = 0; //гра Рамка
 ctx.font = '40px Georgia';
 let gameSpeed = 1;
 let gameOver = false;
+
+
 
 //Mouse interactivity
 let canvasPosition = canvas.getBoundingClientRect();
@@ -30,6 +33,7 @@ canvas.addEventListener('mouseup', function(){
 });
 
 const player = new Player(canvas, mouse, ctx);
+const backgroundObj = new Background(canvas, ctx, gameSpeed);
 //Bubbles
 const bubblesArrey = [];
 const bubbleImage = new Image();
@@ -93,28 +97,26 @@ function handleBubbles(){
     }
 
     //Repeating backgrounds
-    const background = new Image();
-    background.src = 'images/background1.png';
+    
+    // const BG = {
+    //     x1: 0,
+    //     x2: canvas.width,
+    //     y: 0,
+    //     width: canvas.width,
+    //     height: canvas.height
+    // }
 
-    const BG = {
-        x1: 0,
-        x2: canvas.width,
-        y: 0,
-        width: canvas.width,
-        height: canvas.height
-    }
-
-    function handleBackground(){
-        BG.x1 -= gameSpeed;
-        if(BG.x1 < -BG.width){
-            BG.x1 = BG.width;
-        } 
+    // function handleBackground(){
+    //     BG.x1 -= gameSpeed;
+    //     if(BG.x1 < -BG.width){
+    //         BG.x1 = BG.width;
+    //     } 
         
-        BG.x2 -= gameSpeed;
-        if(BG.x2 < -BG.width) BG.x2 = BG.width;
-        ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
-        ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
-    }
+    //     BG.x2 -= gameSpeed;
+    //     if(BG.x2 < -BG.width) BG.x2 = BG.width;
+    //     ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
+    //     ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
+    // }
 
 //Enemies
 const enemyImage = new Image();
@@ -181,7 +183,7 @@ function handleGameOver(){
 // FIXME: підібрати кращу назву
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    handleBackground();
+    backgroundObj.handleBackground();
     handleBubbles();
     player.update();
     player.draw();
@@ -200,8 +202,8 @@ window.addEventListener('resize', function(){
 // TODO:
 // interactivity
 // + Player
-// Bubbles
 // backgrounds
+// Bubbles
 // Enemies
 
 //FIXME:
