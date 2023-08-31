@@ -1,5 +1,6 @@
 import Player from './player.js';
 import Background from './background.js';
+import Bubbles from './bubbles.js';
 
 //Canvas setup
 const canvas = document.querySelector('#canvas1');
@@ -34,89 +35,68 @@ canvas.addEventListener('mouseup', function(){
 
 const player = new Player(canvas, mouse, ctx);
 const backgroundObj = new Background(canvas, ctx, gameSpeed);
+const bubbles = new Bubbles(canvas, player, gameFrame, ctx);
+
 //Bubbles
-const bubblesArrey = [];
-const bubbleImage = new Image();
-bubbleImage.src = "./images/1.png";
+// const bubblesArrey = [];
+// const bubbleImage = new Image();
+// bubbleImage.src = "./images/1.png";
 
-class Bubbles{
-    constructor(){
-        this.radius = 50;
-        this.x = Math.random() * canvas.width;
-        this.y = canvas.height + this.radius * 2;
-        this.speed = Math.random() * 5 + 1;
-        this.distance;
-        this.counted = false;
-        this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";
-    }
-    update(){
-        this.y -= this.speed;
-        const dx = this.x - player.x;
-        const dy = this.y - player.y;
-        this.distance = Math.sqrt(dx * dx + dy * dy);
-    }
+// class Bubbles{
+//     constructor(){
+//         this.radius = 50;
+//         this.x = Math.random() * canvas.width;
+//         this.y = canvas.height + this.radius * 2;
+//         this.speed = Math.random() * 5 + 1;
+//         this.distance;
+//         this.counted = false;
+//         this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";
+//     }
+//     update(){
+//         this.y -= this.speed;
+//         const dx = this.x - player.x;
+//         const dy = this.y - player.y;
+//         this.distance = Math.sqrt(dx * dx + dy * dy);
+//     }
 
-    draw(){
-        ctx.drawImage(bubbleImage, this.x - 65, this.y - 65, this.radius * 2.6, this.radius * 2.6);
-    }
-}
+//     draw(){
+//         ctx.drawImage(bubbleImage, this.x - 65, this.y - 65, this.radius * 2.6, this.radius * 2.6);
+//     }
+// }
 
-const bubblePop1 = document.createElement('audio');
-bubblePop1.src = "sound/scr_sound_Plop.ogg";
-const bubblePop2 = document.createElement("audio");
-bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
+// const bubblePop1 = document.createElement('audio');
+// bubblePop1.src = "sound/scr_sound_Plop.ogg";
+// const bubblePop2 = document.createElement("audio");
+// bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
 
-function handleBubbles(){
-    if(gameFrame % 50 == 0){
-        bubblesArrey.push(new Bubbles());
-        console.log(bubblesArrey.length); 
-    }
-    for(let i = 0; i < bubblesArrey.length; i++){
-        bubblesArrey[i].update();
-        bubblesArrey[i].draw();
+// function handleBubbles(){
+//     if(gameFrame % 50 == 0){
+//         bubblesArrey.push(new Bubbles()); 
+//     }
+//     for(let i = 0; i < bubblesArrey.length; i++){
+//         bubblesArrey[i].update();
+//         bubblesArrey[i].draw();
 
-        if(bubblesArrey[i].y < 0 - bubblesArrey[i].radius * 2){
-            bubblesArrey.splice(i,1);
-            i--;
-        } else if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
-                if(bubblesArrey[i].sound === "sound1"){
-                    bubblePop1.play();
-                } else if(bubblesArrey[i].sound === "sound2"){
-                    bubblePop2.play();
-                }
-                score++;
-                bubblesArrey[i].counted = true;
-                bubblesArrey.splice(i,1)
-                i--;
-            }
-        }
-    }
+//         if(bubblesArrey[i].y < 0 - bubblesArrey[i].radius * 2){
+//             bubblesArrey.splice(i,1);
+//             i--;
+//         } else if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
+//                 if(bubblesArrey[i].sound === "sound1"){
+//                     bubblePop1.play();
+//                 } else if(bubblesArrey[i].sound === "sound2"){
+//                     bubblePop2.play();
+//                 }
+//                 score++;
+//                 bubblesArrey[i].counted = true;
+//                 bubblesArrey.splice(i,1)
+//                 i--;
+//             }
+//         }
+//     }
 
-    for(let i = 0; i < bubblesArrey.length; i++){
+//     for(let i = 0; i < bubblesArrey.length; i++){
 
-    }
-
-    //Repeating backgrounds
-    
-    // const BG = {
-    //     x1: 0,
-    //     x2: canvas.width,
-    //     y: 0,
-    //     width: canvas.width,
-    //     height: canvas.height
-    // }
-
-    // function handleBackground(){
-    //     BG.x1 -= gameSpeed;
-    //     if(BG.x1 < -BG.width){
-    //         BG.x1 = BG.width;
-    //     } 
-        
-    //     BG.x2 -= gameSpeed;
-    //     if(BG.x2 < -BG.width) BG.x2 = BG.width;
-    //     ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
-    //     ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
-    // }
+//     }
 
 //Enemies
 const enemyImage = new Image();
@@ -184,7 +164,7 @@ function handleGameOver(){
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     backgroundObj.handleBackground();
-    handleBubbles();
+    bubbles.handleBubbles()
     player.update();
     player.draw();
     handleEnemies();
@@ -202,7 +182,7 @@ window.addEventListener('resize', function(){
 // TODO:
 // interactivity
 // + Player
-// backgrounds
+// + backgrounds
 // Bubbles
 // Enemies
 
