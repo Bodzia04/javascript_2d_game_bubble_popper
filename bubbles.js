@@ -7,15 +7,15 @@ bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
 
 export default class Bubbles{
     bubblesArray = [];
-    constructor(canvas, player, gameFrame, ctx){
+    constructor(canvas, player, ctx, score){
         this.canvas = canvas;
         this.player = player;
-        this.gameFrame = gameFrame;
         this.ctx = ctx;
+        this.score = score;
     }
 
-    handleBubbles(){
-        if(this.gameFrame % 50 == 0){
+    handleBubbles(gameFrame){
+        if(gameFrame % 50 == 0){
             this.bubblesArray.push(new Bubble(this.canvas, this.player, this.ctx));
         }
         for(let i = 0; i < this.bubblesArray.length; i++){
@@ -25,13 +25,13 @@ export default class Bubbles{
             if(this.bubblesArray[i].y < 0 - this.bubblesArray[i].radius * 2){
                 this.bubblesArray.splice(i,1);
                 i--;
-            } else if(this.bubblesArray[i].distance < this.bubblesArray[i].radius + this.player){
+            } else if(this.bubblesArray[i].distance < this.bubblesArray[i].radius + this.player.radius){
                     if(this.bubblesArray[i].sound === "sound1"){
                         bubblePop1.play();
                     } else if(this.bubblesArray[i].sound === "sound2"){
                         bubblePop2.play();
                     }
-                    score++;
+                    this.score++;
                     this.bubblesArray[i].counted = true;
                     this.bubblesArray.splice(i,1)
                     i--;

@@ -35,7 +35,7 @@ canvas.addEventListener('mouseup', function(){
 
 const player = new Player(canvas, mouse, ctx);
 const backgroundObj = new Background(canvas, ctx, gameSpeed);
-const bubbles = new Bubbles(canvas, player, gameFrame, ctx);
+const bubbles = new Bubbles(canvas, player, ctx, score);
 
 //Bubbles
 // const bubblesArrey = [];
@@ -164,12 +164,12 @@ function handleGameOver(){
 function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     backgroundObj.handleBackground();
-    bubbles.handleBubbles()
+    bubbles.handleBubbles(gameFrame)
     player.update();
     player.draw();
     handleEnemies();
     ctx.fillStyle = 'black';
-    ctx.fillText('score: ' + score, 10, 50);
+    ctx.fillText('score: ' + bubbles.score, 10, 50);
     gameFrame++;
     if(!gameOver) requestAnimationFrame(animate);
 }
