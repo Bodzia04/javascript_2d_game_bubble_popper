@@ -1,6 +1,7 @@
 import Player from './player.js';
 import Background from './background.js';
 import Bubbles from './bubbles.js';
+import Enemy from './enemy.js';
 
 //Canvas setup
 const canvas = document.querySelector('#canvas1');
@@ -36,128 +37,8 @@ canvas.addEventListener('mouseup', function(){
 const player = new Player(canvas, mouse, ctx);
 const backgroundObj = new Background(canvas, ctx, gameSpeed);
 const bubbles = new Bubbles(canvas, player, ctx, score);
+const enemy1 = new Enemy(canvas,    player, ctx, gameOver, score);
 
-//Bubbles
-// const bubblesArrey = [];
-// const bubbleImage = new Image();
-// bubbleImage.src = "./images/1.png";
-
-// class Bubbles{
-//     constructor(){
-//         this.radius = 50;
-//         this.x = Math.random() * canvas.width;
-//         this.y = canvas.height + this.radius * 2;
-//         this.speed = Math.random() * 5 + 1;
-//         this.distance;
-//         this.counted = false;
-//         this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";
-//     }
-//     update(){
-//         this.y -= this.speed;
-//         const dx = this.x - player.x;
-//         const dy = this.y - player.y;
-//         this.distance = Math.sqrt(dx * dx + dy * dy);
-//     }
-
-//     draw(){
-//         ctx.drawImage(bubbleImage, this.x - 65, this.y - 65, this.radius * 2.6, this.radius * 2.6);
-//     }
-// }
-
-// const bubblePop1 = document.createElement('audio');
-// bubblePop1.src = "sound/scr_sound_Plop.ogg";
-// const bubblePop2 = document.createElement("audio");
-// bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
-
-// function handleBubbles(){
-//     if(gameFrame % 50 == 0){
-//         bubblesArrey.push(new Bubbles()); 
-//     }
-//     for(let i = 0; i < bubblesArrey.length; i++){
-//         bubblesArrey[i].update();
-//         bubblesArrey[i].draw();
-
-//         if(bubblesArrey[i].y < 0 - bubblesArrey[i].radius * 2){
-//             bubblesArrey.splice(i,1);
-//             i--;
-//         } else if(bubblesArrey[i].distance < bubblesArrey[i].radius + player.radius){
-//                 if(bubblesArrey[i].sound === "sound1"){
-//                     bubblePop1.play();
-//                 } else if(bubblesArrey[i].sound === "sound2"){
-//                     bubblePop2.play();
-//                 }
-//                 score++;
-//                 bubblesArrey[i].counted = true;
-//                 bubblesArrey.splice(i,1)
-//                 i--;
-//             }
-//         }
-//     }
-
-//     for(let i = 0; i < bubblesArrey.length; i++){
-
-//     }
-
-//Enemies
-const enemyImage = new Image();
-enemyImage.src = './images/enemy-fish-yellow.png';
-
-class Enemy {
-    constructor(){
-        this.x = canvas.width + 200;
-        this.y = Math.random() * (canvas.height - 150) + 90;
-        this.radius = 60;
-        this.speed = Math.random() * 2 + 2;
-        this.frame = 0; //рамка
-        this.frameX = 0
-        this.frameY = 0;
-        this.spriteWidth = 418;
-        this.spriteHeight = 397;
-    }
-    draw(){
-        ctx.drawImage(enemyImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 60, this.y - 70, this.spriteWidth / 3, this.spriteHeight / 3);
-    }
-    update(){
-        this.x -= this.speed;
-        if(this.x < 0 - this.radius * 2){
-            this.x = canvas.width + 200;
-            this.y = Math.random() * (canvas.height - 150) + 90;
-            this.speed = Math.random() * 2 + 2;
-        }
-        if(gameFrame % 5 == 0){
-            this.frame++;
-            if(this.frame >= 12) this.frame = 0;
-            if(this.frame == 3 || this.frame == 7 || this.frame == 11){
-                this.frameX = 0;
-            } else{
-                this.frameX++;
-            }
-            if(this.frame < 3) this.frameY = 0
-            else if(this.frame < 7) this.frameY = 1;
-            else if(this.frame < 11) this.frameY = 2;
-            else this.frameY = 0;
-        }
-        const dx = this.x - player.x;
-        const dy = this.y - player.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if(distance < this.radius + player.radius){
-            handleGameOver();
-        }
-
-    }
-}
-const enemy1 = new Enemy();
-console.log('constructor enemy', enemy1);
-function handleEnemies(){
-    enemy1.update();
-    enemy1.draw();
-}
-
-function handleGameOver(){
-    ctx.fillStyle = 'white';
-    ctx.fillText("GAME OVER, you reached score " + score, 110, 250)
-    gameOver = true;
-}
 
 //Animation loop
 // FIXME: підібрати кращу назву
@@ -167,11 +48,11 @@ function animate(){
     bubbles.handleBubbles(gameFrame)
     player.update();
     player.draw();
-    handleEnemies();
+    enemy1.handleEnemies(gameFrame);
     ctx.fillStyle = 'black';
     ctx.fillText('score: ' + bubbles.score, 10, 50);
     gameFrame++;
-    if(!gameOver) requestAnimationFrame(animate);
+    if(!enemy1.gameOver) requestAnimationFrame(animate);
 }
 animate();
 
@@ -183,13 +64,14 @@ window.addEventListener('resize', function(){
 // interactivity
 // + Player
 // + backgrounds
-// Bubbles
-// Enemies
+// + Bubbles
+// + Enemies
 
 //FIXME:
 // 1. чому в режимі спокую голова рибкі опускаїться.
 // 2. Бульбашка лопає за надто ранно. Коли торкає живота рибки.
 // 3. знайти баг чому картинка хвилі не докінця з'єднуїться.
+// 4. рішити проблему з швидкістю ворога. Від другого появлення ворога швидкість одинакова.
 
 
 // for perspectiv:
