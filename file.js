@@ -2,10 +2,12 @@ import Player from './player.js';
 import Background from './background.js';
 import Bubbles from './bubbles.js';
 import Enemy from './enemy.js';
+import Interactivity from './interactivity.js'
 
 //Canvas setup
 const canvas = document.querySelector('#canvas1');
 const ctx = canvas.getContext('2d');
+let canvasPosition = canvas.getBoundingClientRect();
 canvas.width = 800;
 canvas.height = 500;
 
@@ -15,30 +17,12 @@ ctx.font = '40px Georgia';
 let gameSpeed = 1;
 let gameOver = false;
 
-
-
-//Mouse interactivity
-let canvasPosition = canvas.getBoundingClientRect();
-const mouse = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    click: false
-}
-canvas.addEventListener('mousedown', function(event){
-    mouse.x = event.x - canvasPosition.left;
-    mouse.y = event.y - canvasPosition.top;
-    mouse.click = true;
-});
-
-canvas.addEventListener('mouseup', function(){
-    mouse.click = false;
-});
-
-const player = new Player(canvas, mouse, ctx);
+const interactivity = new Interactivity(canvas, canvasPosition);
+interactivity.handleInteractivity()
+const player = new Player(canvas, interactivity.mouse, ctx);
 const backgroundObj = new Background(canvas, ctx, gameSpeed);
 const bubbles = new Bubbles(canvas, player, ctx, score);
-const enemy1 = new Enemy(canvas,    player, ctx, gameOver, score);
-
+const enemy1 = new Enemy(canvas, player, ctx, gameOver, score);
 
 //Animation loop
 // FIXME: підібрати кращу назву
@@ -79,5 +63,6 @@ window.addEventListener('resize', function(){
 //2. контроль клавішами.
 //3. вийшовши з води бульбашка лопає.
 
-
+//закінчив роботу над:
+    
 
