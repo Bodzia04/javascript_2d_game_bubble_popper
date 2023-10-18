@@ -4,11 +4,11 @@ export default class Interactivity {
         y: 0,
         click: false
     }
-    constructor(canvas, canvasPosition){
-        this.canvas = canvas;
-        this.canvasPosition = canvasPosition;
-        this.mouse.x = canvas.width / 2;
-        this.mouse.y = canvas.height / 2;
+    constructor(game){
+        this.canvas = game.canvas;
+        this.canvasPosition = game.canvasPosition;
+        this.mouse.x = game.canvas.width / 2;
+        this.mouse.y = game.canvas.height / 2;
     }
 
     handleInteractivity(){

@@ -4,11 +4,11 @@ const playerRight = new Image();
 playerRight.src = 'images/fish-red-swim-right.png';
 
 export default class Player{
-    constructor(canvas, mouse, ctx){
+    constructor(game, mouse){
         this.mouse = mouse;
-        this.ctx = ctx;
-        this.x = canvas.width;
-        this.y = canvas.height / 2;
+        this.ctx = game.ctx;
+        this.x = game.canvas.width;
+        this.y = game.canvas.height / 2;
         this.radius = 50;
         this.angle = 0;
         this.frameX = 0;

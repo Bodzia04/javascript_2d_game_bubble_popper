@@ -7,15 +7,16 @@ bubblePop2.src = "sound/scr_sound_bubbles-single1.wav";
 
 export default class Bubbles{
     bubblesArray = [];
-    constructor(canvas, player, ctx, score){
-        this.canvas = canvas;
+    constructor(game, player){
+        this.gameFrame = game.gameFrame;
+        this.canvas = game.canvas;
         this.player = player;
-        this.ctx = ctx;
-        this.score = score;
+        this.ctx = game.ctx;
+        this.score = game.score;
     }
 
-    handleBubbles(gameFrame){
-        if(gameFrame % 50 == 0){
+    handleBubbles(){
+        if(this.gameFrame % 50 == 0){
             this.bubblesArray.push(new Bubble(this.canvas, this.player, this.ctx));
         }
         for(let i = 0; i < this.bubblesArray.length; i++){

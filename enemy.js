@@ -2,12 +2,13 @@ const enemyImage = new Image();
 enemyImage.src = './images/enemy-fish-yellow.png';
 
 export default class Enemy {
-    constructor(canvas, player, ctx, gameOver, score){
-        this.canvas = canvas;
+    constructor(game, player){
+        this.gameFrame = game.gameFrame;
+        this.canvas = game.canvas;
         this.player = player;
-        this.ctx = ctx;
-        this.gameOver = gameOver;
-        this.score = score;
+        this.ctx = game.ctx;
+        this.gameOver = game.gameOver;
+        this.score = game.score;
         this.x = this.canvas.width + 300;
         this.y = Math.random() * (this.canvas.height - 150) + 90;
         this.radius = 60;
@@ -30,7 +31,6 @@ export default class Enemy {
         }
         if(gameFrame % 5 == 0){
             this.frame++;
-            debugger
             if(this.frame >= 12) this.frame = 0;
             if(this.frame == 3 || this.frame == 7 || this.frame == 11){
                 this.frameX = 0;
@@ -50,8 +50,8 @@ export default class Enemy {
         }
 
     }
-    handleEnemies(gameFrame){
-        this.update(gameFrame);
+    handleEnemies(){
+        this.update(this.gameFrame);
         this.draw();
     }
     handleGameOver(){

@@ -2,15 +2,15 @@ const backgroundImg = new Image();
 backgroundImg.src = 'images/background1.png';
 
 export default class Background{
-    constructor(canvas, ctx, gameSpeed){
-        this.canvas = canvas;
-        this.ctx = ctx;
-        this.gameSpeed = gameSpeed
+    constructor(game){
+        this.canvas = game.canvas;
+        this.ctx = game.ctx;
+        this.gameSpeed = game.gameSpeed
         this.x1 = 0;
-        this.x2 = canvas.width;
+        this.x2 = game.canvas.width;
         this.y = 0;
-        this.width = canvas.width;
-        this.height = canvas.height
+        this.width = game.canvas.width;
+        this.height = game.canvas.height
     }
 
     handleBackground(){
