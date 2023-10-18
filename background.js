@@ -3,6 +3,8 @@ backgroundImg.src = 'images/background1.png';
 
 export default class Background{
     constructor(game){
+        this.game = game;
+        
         this.canvas = game.canvas;
         this.ctx = game.ctx;
         this.gameSpeed = game.gameSpeed

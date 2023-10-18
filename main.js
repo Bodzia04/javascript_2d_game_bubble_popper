@@ -28,10 +28,10 @@ const enemy1 = new Enemy(game, player);
 //     game.gameFrame++;
 //     if(!enemy1.gameOver) requestAnimationFrame(animate);
 // }
+game.addFunction(backgroundObj.handleBackground.bind(backgroundObj));
 game.addFunction(bubbles.handleBubbles.bind(bubbles));
 game.addFunction(enemy1.handleEnemies.bind(enemy1));
 game.addFunction(player.draw.bind(player));
-game.addFunction(backgroundObj.handleBackground.bind(backgroundObj));
 game.addFunction(player.update.bind(player));
 game.animate();
 // game.start();
