@@ -21,7 +21,7 @@ export default class Enemy {
     draw(){
         this.ctx.drawImage(enemyImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 60, this.y - 70, this.spriteWidth / 3, this.spriteHeight / 3);
     }
-    update(gameFrame){
+    update(){
         this.x -= this.speed;
         if(this.x < 0 - this.radius * 2){
             this.x = this.canvas.width + 200;
@@ -50,7 +50,7 @@ export default class Enemy {
 
     }
     handleEnemies(){
-        this.update(this.game.gameFrame);
+        this.update();
         this.draw();
     }
     handleGameOver(){

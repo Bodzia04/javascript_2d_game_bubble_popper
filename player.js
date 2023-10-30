@@ -5,6 +5,7 @@ playerRight.src = 'images/fish-red-swim-right.png';
 
 export default class Player{
     constructor(game, mouse){
+        this.game = game;
         this.mouse = mouse;
         this.ctx = game.ctx;
         this.x = game.canvas.width;
@@ -19,6 +20,43 @@ export default class Player{
     }
 
     update(){
+
+
+        if(this.x >= this.mouse.x){
+            if(this.game.gameFrame % 5 == 0){
+                this.frame++;
+                if(this.frame >= 12) this.frame = 0;
+                if(this.frame == 3 || this.frame == 7 || this.frame == 11){
+                    this.frameX = 0;
+                } else{
+                    this.frameX++;
+                }
+                if(this.frame < 3) this.frameY = 0
+                else if(this.frame < 7) this.frameY = 1;
+                else if(this.frame < 11) this.frameY = 2;
+                else this.frameY = 0;
+            }
+            
+            } else {
+            if(this.game.gameFrame % 5 == 0){
+                this.frame++;
+                if(this.frame >= 12) this.frame = 0;
+                if(this.frame == 3 || this.frame == 7 || this.frame == 11){
+                    this.frameX = 0;
+                } else{
+                    this.frameX++;
+                }
+                if(this.frame < 3) this.frameY = 2;
+                else if(this.frame < 7) this.frameY = 1;
+                else if(this.frame < 11) this.frameY = 0;
+                else this.frameY = 2;
+            }
+        }
+        this.ctx.restore();
+
+
+
+
         const dx = this.x - this.mouse.x;
         const dy = this.y - this.mouse.y;
         let theta = Math.atan2(dy, dx);

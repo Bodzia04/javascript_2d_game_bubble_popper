@@ -36,8 +36,11 @@ export default class Bubbles{
                     this.bubblesArray[i].counted = true;
                     this.bubblesArray.splice(i,1)
                     i--;
+                } else if (this.bubblesArray[i].y < 100){
+                    this.bubblesArray.splice(i,1);
+                    i--;
                 }
-            }
+                }
         }
     }
 
