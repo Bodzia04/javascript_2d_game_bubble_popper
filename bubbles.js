@@ -16,8 +16,7 @@ export default class Bubbles{
 
     handleBubbles(){
         if(this.game.gameFrame % 50 == 0){
-            console.log(this.game);
-            this.bubblesArray.push(new Bubble(this.canvas, this.player, this.ctx));
+            this.bubblesArray.push(new Bubble(this.canvas, this.player, this.ctx, this.game));
         }
         for(let i = 0; i < this.bubblesArray.length; i++){
             this.bubblesArray[i].update();
@@ -32,6 +31,7 @@ export default class Bubbles{
                     } else if(this.bubblesArray[i].sound === "sound2"){
                         bubblePop2.play();
                     }
+                    this.bubblesArray[i].animate();
                     this.game.score++;
                     this.bubblesArray[i].counted = true;
                     this.bubblesArray.splice(i,1)

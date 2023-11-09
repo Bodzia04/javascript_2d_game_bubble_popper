@@ -20,8 +20,6 @@ export default class Player{
     }
 
     update(){
-
-
         if(this.x >= this.mouse.x){
             if(this.game.gameFrame % 5 == 0){
                 this.frame++;
